@@ -20,6 +20,6 @@ if __name__ == "__main__":
     # engine.addImageProvider("FrameImageProvider", FrameImageProvider())
     engine.rootContext().setContextProperty("QMLBridge", bridge)
   
-    engine.load(QUrl.fromLocalFile("./ui.qml"))
+    engine.load(QUrl.fromLocalFile("./ui/main.qml"))
 
     sys.exit(app.exec_())
