@@ -14,7 +14,6 @@ def main():
   frame_height = int(video_reader.get(cv.CAP_PROP_FRAME_HEIGHT))
 
   raw_frames_list = frame_sampling(video_reader)
-  print(len(raw_frames_list))
 
   # Frame dimensions
 
@@ -30,11 +29,9 @@ def main():
     
     if(changed_pixel_number > 300):
       cv.imwrite("./dump/" + str(counter) + ".jpg", current_frame)
-      print("Saved frame")
     
     counter = counter + 1
     previous_frame = current_frame
-    print(counter)
     
 
 def frame_sampling(video_reader : cv.VideoCapture, frames_per_second=1):

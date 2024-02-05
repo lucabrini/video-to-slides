@@ -51,7 +51,6 @@ class VideoToSlides:
   def find_slides_frames(self, raw_frames_list, box : BoundingBox):
     frame_height = box.get_height()
     frame_width = box.get_width()
-    print(frame_height, frame_width)
     
     previous_frame = np.zeros((frame_height, frame_width, 3), np.uint8)
 
@@ -68,7 +67,6 @@ class VideoToSlides:
       
       counter = counter + 1
       previous_frame = current_frame
-      print(counter)
     
     return slides_frames
 
