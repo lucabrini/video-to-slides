@@ -96,7 +96,7 @@ Item {
     } 
     
     QMLBridge.convert(videofileDialog.file, destinationfileDialog.file)
-
+    QMLBridge.reset_selected_bbox()
     successMessage.open()
   }
 

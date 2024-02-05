@@ -11,7 +11,7 @@ from video_to_slides import VideoToSlides
 class QMLBridge(QObject):
   
   frame : cv.Mat
-  selected_bbox :  BoundingBox
+  selected_bbox = None
   
   def __init__(self):
     self.video_to_slides = VideoToSlides()
@@ -25,11 +25,15 @@ class QMLBridge(QObject):
       
     output_path = output_path[7:]
     self.video_to_slides.convert(video_path, output_path, self.selected_bbox)
+      
     
   @pyqtSlot(int, int, int, int)
   def save_selected_bbox(self, x_start, x_end, y_start, y_end ):
     self.selected_bbox = BoundingBox(x_start, x_end, y_start, y_end)
     
+  @pyqtSlot()
+  def reset_selected_bbox(self):
+    self.selected_bbox = None
 
   @pyqtSlot(str)
   def take_a_frame(self, video_path):

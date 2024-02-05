@@ -1,0 +1,1 @@
+python3 -m nuitka --plugin-enable=pyqt5 --follow-imports --windows-disable-console --include-data-dir=./ui=ui --macos-create-app-bundle --include-qt-plugins=qml --onefile main.py

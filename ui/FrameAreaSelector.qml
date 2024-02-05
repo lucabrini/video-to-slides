@@ -12,10 +12,10 @@ Item {
   property real img_relative_mouse_x: 0
   property real img_relative_mouse_y: 0
 
-  property int img_x_start: getXPosition(frameImage)
-  property int img_x_end: getXPosition(frameImage) + frameImage.paintedWidth
-  property int img_y_start: getYPosition(frameImage)
-  property int img_y_end: getYPosition(frameImage) + frameImage.paintedHeight
+  property int img_x_start: 0
+  property int img_x_end: 0
+  property int img_y_start: 0
+  property int img_y_end: 0
 
   property int selection_x_start: 0
   property int selection_x_end: 0
@@ -88,9 +88,22 @@ Item {
         img_y_start,
         img_y_end
       )
+      reset()
       stackView.pop()
     }
     Layout.alignment: Qt.AlignRight
+  }
+
+  function reset(){
+    img_x_start = 0
+    img_x_end = 0
+    img_y_start = 0
+    img_y_end = 0
+
+    selection_x_start = 0
+    selection_x_end = 0
+    selection_y_start = 0
+    selection_y_end = 0
   }
 
   function isMouseInTheImageArea(image: Image, mouse: MouseEvent){

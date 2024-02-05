@@ -8,8 +8,7 @@ from reportlab.lib.utils import ImageReader
 from bounding_box import BoundingBox
 
 class VideoToSlides:
-  
-
+      
   def convert(self, video_path, dump_path, bounding_box : BoundingBox):
     
     video_reader = cv.VideoCapture(video_path)
@@ -17,9 +16,12 @@ class VideoToSlides:
     frame_width = int(video_reader.get(cv.CAP_PROP_FRAME_WIDTH))
     frame_height = int(video_reader.get(cv.CAP_PROP_FRAME_HEIGHT))
     
-    # This will be passed from the upper function
+    if(not bounding_box):
+      bounding_box = BoundingBox(0, frame_width, 0, frame_height)
+    
     
     raw_frames_list = self.frame_sampling(video_reader)
+          
     slides_frame = self.find_slides_frames(raw_frames_list, bounding_box)
     
     self.dump_slides(slides_frame, dump_path, bounding_box)
