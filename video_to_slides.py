@@ -10,7 +10,7 @@ from bounding_box import BoundingBox
 class VideoToSlides:
   
 
-  def convert(self, video_path, dump_path, box=[]):
+  def convert(self, video_path, dump_path, bounding_box : BoundingBox):
     
     video_reader = cv.VideoCapture(video_path)
     
@@ -18,7 +18,6 @@ class VideoToSlides:
     frame_height = int(video_reader.get(cv.CAP_PROP_FRAME_HEIGHT))
     
     # This will be passed from the upper function
-    bounding_box = BoundingBox(0, frame_width, 0, frame_height )
     
     raw_frames_list = self.frame_sampling(video_reader)
     slides_frame = self.find_slides_frames(raw_frames_list, bounding_box)
@@ -50,6 +49,7 @@ class VideoToSlides:
   def find_slides_frames(self, raw_frames_list, box : BoundingBox):
     frame_height = box.get_height()
     frame_width = box.get_width()
+    print(frame_height, frame_width)
     
     previous_frame = np.zeros((frame_height, frame_width, 3), np.uint8)
 
@@ -58,6 +58,8 @@ class VideoToSlides:
     counter = 0
     for current_frame in raw_frames_list:
       
+      current_frame = self.extract_roi(current_frame, box)
+
       different = self.compare_frames(previous_frame, current_frame)
       if different:
         slides_frames.append(current_frame)
@@ -116,3 +118,7 @@ class VideoToSlides:
     
     else:
       return img
+
+  def extract_roi(self, img, bounding_box):
+    return img[bounding_box.y_start:bounding_box.y_end, bounding_box.x_start:bounding_box.x_end]
+  

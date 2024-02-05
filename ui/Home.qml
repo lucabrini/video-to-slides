@@ -57,7 +57,12 @@ Item {
 
       Button {
         text: "Scegli area"
-        onClicked: stackView.push("FrameAreaSelector.qml")
+        onClicked: {
+          if(videofileDialog.file != ""){
+            QMLBridge.take_a_frame(videofileDialog.file)
+            stackView.push("FrameAreaSelector.qml")
+          }
+        }
         Layout.alignment: Qt.AlignRight
         width: 10
       }
@@ -89,9 +94,9 @@ Item {
       noDestinationMessage.open()
       return
     } 
-    // main.loading = true;
+    
     QMLBridge.convert(videofileDialog.file, destinationfileDialog.file)
-    // main.loading = false;
+
     successMessage.open()
   }
 

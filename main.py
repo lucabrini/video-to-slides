@@ -13,11 +13,11 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
 
-
     bridge = QMLBridge()
+    frameImageProvider = FrameImageProvider(bridge)
 
     engine = QQmlApplicationEngine()
-    # engine.addImageProvider("FrameImageProvider", FrameImageProvider())
+    engine.addImageProvider("FrameImageProvider", frameImageProvider)
     engine.rootContext().setContextProperty("QMLBridge", bridge)
   
     engine.load(QUrl.fromLocalFile("./ui/main.qml"))

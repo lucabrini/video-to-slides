@@ -4,6 +4,7 @@ import Qt.labs.platform 1.1
 import QtQuick.Layouts 1.15
 
 Item {
+  id: frameAreaSelector
   visible: true
 
   property real img_x_scale: 0
@@ -11,10 +12,10 @@ Item {
   property real img_relative_mouse_x: 0
   property real img_relative_mouse_y: 0
 
-  property int img_x_start: 0
-  property int img_x_end: 0
-  property int img_y_start: 0
-  property int img_y_end: 0
+  property int img_x_start: getXPosition(frameImage)
+  property int img_x_end: getXPosition(frameImage) + frameImage.paintedWidth
+  property int img_y_start: getYPosition(frameImage)
+  property int img_y_end: getYPosition(frameImage) + frameImage.paintedHeight
 
   property int selection_x_start: 0
   property int selection_x_end: 0
@@ -23,7 +24,7 @@ Item {
 
   Image {
     id: frameImage
-    source: "../dataset/frame.png"
+    source: "image://FrameImageProvider/img"
     anchors.fill: parent
     fillMode: Image.PreserveAspectFit
 
@@ -59,16 +60,6 @@ Item {
           "start_x =", img_x_start, "end_x =", img_x_end, 
           "start_y =", img_y_start, "end_y =", img_y_end,
         )
-
-        img_x_start = 0
-        img_y_start = 0
-        img_x_end = 0
-        img_y_end = 0
-
-        selection_x_start = 0
-        selection_x_end = 0
-        selection_y_start = 0
-        selection_y_end = 0
       }
     }
 
@@ -82,6 +73,24 @@ Item {
       color: "#d2d2d2"
       border.color: "#ffffff"
     }
+  }
+
+  Button {
+    text: "Okay"
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.bottomMargin: 10
+    anchors.rightMargin: 10
+    onClicked: {
+      QMLBridge.save_selected_bbox(
+        img_x_start,
+        img_x_end,
+        img_y_start,
+        img_y_end
+      )
+      stackView.pop()
+    }
+    Layout.alignment: Qt.AlignRight
   }
 
   function isMouseInTheImageArea(image: Image, mouse: MouseEvent){
